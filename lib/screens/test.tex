@@ -1,0 +1,176 @@
+%\usepackage{hyperref} %do bibliografii
+\raggedbottom %do usuwania odstepow
+\usepackage{xargs}                      % Use more than one optional parameter in a new commands
+
+\usepackage[pdftex,dvipsnames]{xcolor}  % Coloured text etc.
+\usepackage{xcolor}
+
+\usepackage{polski}
+\usepackage{amsfonts}
+\usepackage{amsthm}
+\usepackage{amsmath}
+\usepackage{amssymb} % To pakiet z dodatkowymi symbolami matematycznymi
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption} %do podpisów obrazków
+\usepackage{bbm}
+\usepackage{enumerate}
+\usepackage{enumitem}  % zmiana stylu wypunktowania
+\usepackage{setspace}
+\usepackage{ulem}  % podkreślenia
+\onehalfspacing
+% \newcommand{\qedwhite}{\hfill \ensuremath{\Box}}  komenda na bialy kwadracik
+
+\allowdisplaybreaks
+
+\newcommand{\R}{\mathbb{R}}
+
+\theoremstyle{plain}
+\newtheorem{tw}{\bfseries Twierdzenie}[chapter]
+\newtheorem{lem}[tw]{\bfseries Lemat}
+\theoremstyle{definition}
+\newtheorem{defi}[tw]{\bfseries Definicja}
+\newtheorem{wn}[tw]{\bfseries Wniosek}
+\newtheorem{uw}[tw]{\bfseries Uwaga}
+\newtheorem{ob}[tw]{\bfseries Obserwacja}
+\newtheorem{za}[tw]{\bfseries Zadanie}
+\newtheorem{pr}[tw]{\bfseries Przykład}
+
+
+\usepackage{geometry}
+\newgeometry{lmargin=3.3 cm, rmargin=3.3 cm}
+
+\numberwithin{section}{chapter}
+
+\renewcommand{\figurename}{\bfseries{Rys.}}
+
+
+\let\StandardTheFigure\thefigure
+\renewcommand{\thefigure}{\thetw}
+
+
+%robi zeby nie bylo akapitow przed twierdzeniami itp
+\makeatletter
+\let\sv@thm\@thm
+\def\@thm{\let\indent\relax\sv@thm}
+\makeatother
+
+\makeatletter
+
+  
+%usuwa nazwa rozdzial w spisie tresci
+
+\renewcommand\tocchapter[3]{%
+  \indentlabel{\@ifnotempty{#2}{\ignorespaces#2.\quad}}#3%
+}
+
+
+
+% Make chapter lines of TOC be BOLD
+\def\l@chapter{\@tocline{0}{8pt plus1pt}{0pt}{}{\bfseries}}
+
+
+\makeatother
+
+%Dodaje kropki w spisie tresci
+
+\makeatletter
+\def\@tocline#1#2#3#4#5#6#7{\relax
+  \ifnum #1>\c@tocdepth % then omit
+  \else
+    \par \addpenalty\@secpenalty\addvspace{#2}%
+    \begingroup \hyphenpenalty\@M
+    \@ifempty{#4}{%
+      \@tempdima\csname r@tocindent\number#1\endcsname\relax
+    }{%
+      \@tempdima#4\relax
+    }%
+    \parindent\z@ \leftskip#3\relax \advance\leftskip\@tempdima\relax
+    \rightskip\@pnumwidth plus4em \parfillskip-\@pnumwidth
+    #5\leavevmode\hskip-\@tempdima #6\nobreak\relax
+    \ifnum#1<0\hfill\else\dotfill\fi\hbox to\@pnumwidth{\@tocpagenum{#7}}\par
+    \nobreak
+    \endgroup
+  \fi}
+\makeatother
+
+%ta formula edytuje styl twierdzenia tak ze pogrubia nazwy i sa spoko wyswietlane
+
+\makeatletter
+\def\th@plain{%
+  \thm@notefont{}% same as heading font
+  \itshape % body font
+}
+\def\th@definition{%
+  \thm@notefont{}% same as heading font
+  \normalfont % body font
+}
+\makeatother
+
+\usepackage{todonotes}
+\usepackage{xargs}                      % Use more than one optional parameter in a new commands
+
+% \newcommand{\tip}
+
+% \newcommand{\R}{\mathbb{R}}
+% \newcommand{\Z}{\mathbb{Z}}
+% \newcommand{\N}{\mathbb{N}}
+% \newcommand{\C}{\mathbb{C}}
+% \newcommand{\protip}
+
+\newcommandx{\tip}[2][1=]{\todo[linecolor=orange,backgroundcolor=SpringGreen,bordercolor=PineGreen,inline,#1]{#2}}
+\newcommandx{\protip}[2][1=]{\todo[linecolor=orange,backgroundcolor=Goldenrod,bordercolor=Dandelion,inline,#1]{#2}}
+
+
+\setlist[enumerate,1]{}%  if you just want to change some aspect of the default enumerate environment
+% https://tex.stackexchange.com/questions/94755/a-new-environment-based-on-enumerate
+\newlist{conds}{enumerate}{1}
+\setlist[conds,1]{label=(\arabic*)}
+
+\newlist{ads}{enumerate}{1}
+\setlist[ads,1]{label=Ad. (\arabic*)}
+
+
+
+
+\renewcommand\thetable{\thechapter\arabic{table}}
+\renewcommand{\thetw}{\arabic{chapter}.{\arabic{tw}}}
+\setlength{\textheight}{21cm}
+\setlength{\topmargin}{-1cm}
+
+\bibliographystyle{plain}
+
+\DeclareMathOperator{\interior}{Int}
+
+% new
+
+
+
+\newtheoremstyle{zadanie}% name
+  {15pt}% space above
+  {\topsep}% space below
+  {}% body font
+  {}% indent amount
+  {\bfseries}% theorem head font
+  {}% punctuation after theorem head
+  {.5em}% space after theorem head
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}% theorem head spec
+\theoremstyle{zadanie}
+\newtheorem{zad}{Zad.}[chapter]
+
+\newtheoremstyle{rozwiazanie}% name
+  {\topsep}% space above
+  {\topsep}% space below
+  {}% body font
+  {}% indent amount
+  {\bfseries}% theorem head font
+  {:}% punctuation after theorem head
+  {.5em}% space after theorem head
+  {\thmname{#1}\thmnumber{ #2}\thmnote{ (#3)}}% theorem head spec
+\theoremstyle{rozwiazanie}
+\newtheorem*{rozw}{Rozwiązanie}
+
+\newtheorem*{odp}{Odpowiedź}
+% end new
